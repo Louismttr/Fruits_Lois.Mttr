@@ -1,0 +1,41 @@
+@model List<T1_Luisa.Models.Fruit>
+@{
+    ViewBag.Title = "Our Products";
+}
+
+<h1>Our Products</h1>
+
+<div class="products-grid">
+    @foreach (var fruit in Model)
+    {
+        <div class="product-card" data-id="@fruit.Id">
+            <div class="product-image">
+                <img src="@fruit.ImageUrl" alt="@fruit.Name" />
+            </div>
+            <div class="product-info">
+                <h2>@fruit.Name</h2>
+                <p>@fruit.Description</p>
+                <div class="product-price">$@fruit.Price.ToString("0.00")</div>
+                <button class="btn add-to-cart" data-id="@fruit.Id">Add to Cart</button>
+            </div>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fruitId = this.getAttribute('data-id');
+                    const fruitName = this.closest('.product-card').querySelector('h2').textContent;
+
+                    // Simple cart functionality - in a real app, you'd use AJAX to update a cart
+                    alert(`Added ${fruitName} to your cart!`);
+                });
+            });
+        });
+    </script>
+}
